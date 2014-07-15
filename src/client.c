@@ -445,7 +445,7 @@ static int client_command(struct mux_client *client, struct usbmuxd_header *hdr)
 	int res;
 	usbmuxd_log(LL_DEBUG, "Client command in fd %d len %d ver %d msg %d tag %d", client->fd, hdr->length, hdr->version, hdr->message, hdr->tag);
 
-	if(client->state != CLIENT_COMMAND) {
+	if(client->state != CLIENT_COMMAND && client->state != CLIENT_LISTEN) {
 		usbmuxd_log(LL_ERROR, "Client %d command received in the wrong state", client->fd);
 		if(send_result(client, hdr->tag, RESULT_BADCOMMAND) < 0)
 			return -1;
